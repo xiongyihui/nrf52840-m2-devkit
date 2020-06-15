@@ -3,14 +3,15 @@ image:
 
 tasks:
   - init: >
-      echo 'export PATH=~/.local/bin:"$PATH"' >> ~/.bashrc &&
+      echo 'export ZEPHYR_TOOLCHAIN_VARIANT=gnuarmemb' >> ~/.bashrc &&
+      echo 'export GNUARMEMB_TOOLCHAIN_PATH="/usr"' >> ~/.bashrc &&
+      echo 'export GNU_INSTALL_ROOT=/usr/bin/' >> ~/.bashrc &&
+      echo 'export GNU_VERSION=`arm-none-eabi-gcc -dumpversion`' >> ~/.bashrc &&
       source ~/.bashrc &&
-      cd /workspace &&
       pip3 install -U west &&
-      west init -l nrf52840-m2-devkit &&
+      west init -l /worksapce/nrf52840-m2-devkit &&
       west update &&
-      pip3 install -r /workspace/zephyr/scripts/requirements.txt
+      pip3 install -r /workspace/zephyr/scripts/requirements.txt &&
+      /workspace/nrf52840-m2-devkit/nrf_sdks/get_sdk.sh
     command: >
-      export ZEPHYR_TOOLCHAIN_VARIANT=gnuarmemb &&
-      export GNUARMEMB_TOOLCHAIN_PATH="/usr" &&
       source /workspace/zephyr/zephyr-env.sh
